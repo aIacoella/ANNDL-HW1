@@ -14,7 +14,6 @@ class model:
         ])
 
     def predict(self, X):
-
         # Note: this is just an example.
         # Here the model.predict is called, followed by the argmax
         out = self.model.predict(preprocess_input(self.resizing(X)))
