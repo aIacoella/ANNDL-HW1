@@ -38,6 +38,9 @@ def load_data(seed=42, path="./public_data.npz", test_size=0.2, val_size=0.2):
     y = y[mask]
     print("Removed Images: " + str(initialDataN - data.shape[0]))
 
+    if(test_size==0 and val_size==0):
+        return (data, y), None, None
+
     X_train_val, X_test, y_train_val, y_test = train_test_split(
         data, y, random_state=seed, test_size=test_size, stratify=y)
     X_train, X_val, y_train, y_val = train_test_split(
