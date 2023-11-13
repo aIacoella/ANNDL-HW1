@@ -11,13 +11,21 @@ data_file = np.load('./public_data.npz', allow_pickle=True)
 
 data = data_file["data"]
 labels = data_file["labels"]
+labels[labels == "healthy"] = 0
+labels[labels == "unhealthy"] = 1
+labels = labels.astype(np.float32)
 
-batch = data[0:10]
+batch = data[0:50]
 
 model = submission_model.model("SubmissionModel")
 
 preds = model.predict(batch)
-print(preds)
 
 # Expected output:
-print("Expected output:" + labels[0:10])
+correct_preictions = 0
+for i in range(50):
+    if preds[i] == labels[i]:
+        correct_preictions += 1
+
+print("Accuracy: " + str(correct_preictions / 50))
+
