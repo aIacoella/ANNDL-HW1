@@ -24,7 +24,7 @@ def load_data(seed=42, path="./public_data.npz", test_size=0.2, val_size=0.2):
     plt.tight_layout()
     plt.show()
 
-    print("Removing trolls and shreks")
+    print("Removing trolls, shreks and duplicates")
     initialDataN = data.shape[0]
 
     mask = []
@@ -36,6 +36,10 @@ def load_data(seed=42, path="./public_data.npz", test_size=0.2, val_size=0.2):
 
     data = data[mask]
     y = y[mask]
+
+    data, indexes = np.unique(data, axis=0, return_index=True)
+    y = y[indexes]
+
     print("Removed Images: " + str(initialDataN - data.shape[0]))
 
     if(test_size==0 and val_size==0):

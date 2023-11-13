@@ -1,4 +1,4 @@
-import SubmissionExample.model as submission_model
+import SubmissionModel.model as submission_model
 from tensorflow.keras.applications.mobilenet import preprocess_input
 from tensorflow.keras import layers as tfkl
 from tensorflow import keras as tfk
@@ -14,7 +14,7 @@ labels = data_file["labels"]
 
 batch = data[0:10]
 
-model = submission_model.model("./SubmissionExample")
+model = submission_model.model("SubmissionModel")
 
 preds = model.predict(batch)
 print(preds)
