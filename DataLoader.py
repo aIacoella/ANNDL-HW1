@@ -14,7 +14,9 @@ def load_data(seed=42, path="./public_data.npz", test_size=0.2, val_size=0.2):
     y[y == "unhealthy"] = 1
     y = y.astype(np.float32)
 
-    #Trolls
+    print("Removing trolls, shreks and duplicates")
+    initialDataN = data.shape[0]
+
     troll = data[338]
     shrek = data[58]
 
@@ -24,26 +26,24 @@ def load_data(seed=42, path="./public_data.npz", test_size=0.2, val_size=0.2):
     plt.tight_layout()
     plt.show()
 
-    print("Removing trolls, shreks and duplicates")
-    initialDataN = data.shape[0]
-
     mask = []
     for i in range(data.shape[0]):
         if np.array_equal(data[i], troll) or np.array_equal(data[i], shrek):
             mask.append(False)
         else:
             mask.append(True)
-
     data = data[mask]
     y = y[mask]
 
     data, indexes = np.unique(data, axis=0, return_index=True)
     y = y[indexes]
 
+    #y = tfk.utils.to_categorical(y, num_classes=2)
+
     print("Removed Images: " + str(initialDataN - data.shape[0]))
 
     if(test_size==0 and val_size==0):
-        return (data, y), None, None
+        return (data, y), (None, None), (None, None)
 
     X_train_val, X_test, y_train_val, y_test = train_test_split(
         data, y, random_state=seed, test_size=test_size, stratify=y)
